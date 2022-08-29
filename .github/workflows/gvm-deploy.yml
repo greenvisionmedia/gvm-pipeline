@@ -4,18 +4,21 @@ on:
       domain:
         required: true
         type: string
-
+    secrets:
+      ftp:
+        required: true
+        
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    environment: ftp
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v2
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      secrets: inherit
       with:
         server: ${{inputs.domain}}
         username: gvm@${{inputs.domain}}
