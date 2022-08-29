@@ -21,5 +21,5 @@ jobs:
       with:
         server: ${{inputs.domain}}
         username: gvm@${{inputs.domain}}
-        password: ${{secrets.FTP_PASSWORD}}
+        password: ${{secrets.ftp}}
         server-dir: ${{inputs.domain}}/public_html/
