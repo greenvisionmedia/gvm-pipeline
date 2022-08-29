@@ -17,6 +17,6 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.3.1
       with:
         server: ${{inputs.domain}}
-        username: gvm@%{{inputs.domain}}
+        username: gvm@${{inputs.domain}}
         password: ${{secrets.FTP_PASSWORD}}
         server-dir: ${{inputs.domain}}/public_html/
