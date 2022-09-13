@@ -2,6 +2,9 @@ name: GVM Deploy
 on:
   workflow_call:
     inputs:
+      directory:
+        required: true
+        type: string
       domain:
         required: true
         type: string
@@ -23,5 +26,5 @@ jobs:
         server: ${{inputs.domain}}
         username: gvm@${{inputs.domain}}
         password: ${{secrets.ftp}}
-        server-dir: ${{inputs.domain}}/public_html/
+        server-dir: ${{inputs.domain}}${{inputs.directory}}
         protocol: ftps
