@@ -26,5 +26,5 @@ jobs:
         server: ${{inputs.domain}}
         username: gvm@${{inputs.domain}}
         password: ${{secrets.ftp}}
-        server-dir: ${{inputs.domain}}${{inputs.directory}}
+        server-dir: ${{inputs.directory}}
         protocol: ftps
