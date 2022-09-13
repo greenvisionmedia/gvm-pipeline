@@ -9,7 +9,6 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
-        with:
 
       - name: 〽️ Minify
         uses: anthonyftwang/minify-action@v1.0.1
