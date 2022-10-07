@@ -13,18 +13,36 @@ on:
         required: true
         
 jobs:
-  web-deploy:
+  gvm-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     
-    - name: 📂 Sync files
+    - name: 🏗️ Build with 11ty
+      run: |
+        npm install @11ty/eleventy
+        npx @11ty/eleventy --output=public_html
+        
+    - name: 〽️ Compress with Minify
+      run: |
+        cd public_html
+        npm i minify@7.0.0 -g
+        apt-get update
+        apt-get -y install moreutils
+
+        find . -type f \( -iname \*.html -o -iname \*.js -o -iname \*.css \) | while read fname
+          do
+          minify ${fname} | sponge ${fname}
+          done   
+
+    - name: 📨 FTPS files
       uses: SamKirkland/FTP-Deploy-Action@4.3.1
       with:
         server: ${{inputs.domain}}
         username: gvm@${{inputs.domain}}
         password: ${{secrets.ftp}}
+        local-dir: ./public_html/
         server-dir: ${{inputs.directory}}
         protocol: ftps
