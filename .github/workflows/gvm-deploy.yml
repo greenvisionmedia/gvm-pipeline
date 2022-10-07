@@ -12,9 +12,9 @@ on:
         required: true
         type: string
     secrets:
-      ftp:
-        required: true
       test:
+        required: true
+      ftp:
         required: true
         
 jobs:
