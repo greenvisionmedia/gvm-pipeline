@@ -38,7 +38,7 @@ jobs:
         username: gvm@greenvisionmedia.net
         password: ${{secrets.test}}
         local-dir: ./public_html/
-        server-dir: ${{inputs.domain}}.greenvisionmedia.net/public_html/
+        server-dir: ${{inputs.subdomain}}.greenvisionmedia.net/public_html/
         protocol: ftps
     
     - name: 📩 Deploy to custom domain
