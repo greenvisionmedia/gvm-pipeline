@@ -8,6 +8,9 @@ on:
       domain:
         required: true
         type: string
+      clean-slate:
+        required: true
+        type: boolean
     secrets:
       ftp:
         required: true
@@ -46,3 +49,4 @@ jobs:
         local-dir: ./public_html/
         server-dir: ${{inputs.directory}}
         protocol: ftps
+        dangerous-clean-slate: ${{inputs.clean-slate}}
