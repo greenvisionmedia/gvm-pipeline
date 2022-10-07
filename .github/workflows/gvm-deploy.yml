@@ -2,17 +2,19 @@ name: GVM Deploy
 on:
   workflow_call:
     inputs:
-      directory:
+      staging:
+        required: true
+        type: boolean
+      subdomain:
         required: true
         type: string
       domain:
         required: true
         type: string
-      clean-slate:
-        required: true
-        type: boolean
     secrets:
       ftp:
+        required: true
+      test:
         required: true
         
 jobs:
@@ -27,26 +29,26 @@ jobs:
       run: |
         npm install @11ty/eleventy
         npx @11ty/eleventy --output=public_html
-        
-    #- name: 〽️ Compress with Minify
-    #  run: |
-    #    cd public_html
-    #    npm i minify@7.0.0 -g
-    #    apt-get update
-    #    apt-get -y install moreutils
-
-    #    find . -type f \( -iname \*.html -o -iname \*.js -o -iname \*.css \) | while read fname
-    #      do
-    #      minify ${fname} | sponge ${fname}
-    #      done   
-
-    - name: 📨 FTPS files
+    
+    - name: ✉️ Deploy to subdomain
+      if: ${{inputs.staging == true}}
+      uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      with:
+        server: greenvisionmedia.net
+        username: gvm@greenvisionmedia.net
+        password: ${{secrets.test}}
+        local-dir: ./public_html/
+        server-dir: ${{inputs.domain}}.greenvisionmedia.net/public_html/
+        protocol: ftps
+    
+    - name: 📩 Deploy to custom domain
+      if: ${{inputs.staging == false}}
       uses: SamKirkland/FTP-Deploy-Action@4.3.1
       with:
         server: ${{inputs.domain}}
         username: gvm@${{inputs.domain}}
         password: ${{secrets.ftp}}
         local-dir: ./public_html/
-        server-dir: ${{inputs.directory}}
+        server-dir: ${{inputs.domain}}/public_html/
         protocol: ftps
         dangerous-clean-slate: ${{inputs.clean-slate}}
