@@ -25,17 +25,17 @@ jobs:
         npm install @11ty/eleventy
         npx @11ty/eleventy --output=public_html
         
-    - name: 〽️ Compress with Minify
-      run: |
-        cd public_html
-        npm i minify@7.0.0 -g
-        apt-get update
-        apt-get -y install moreutils
+    #- name: 〽️ Compress with Minify
+    #  run: |
+    #    cd public_html
+    #    npm i minify@7.0.0 -g
+    #    apt-get update
+    #    apt-get -y install moreutils
 
-        find . -type f \( -iname \*.html -o -iname \*.js -o -iname \*.css \) | while read fname
-          do
-          minify ${fname} | sponge ${fname}
-          done   
+    #    find . -type f \( -iname \*.html -o -iname \*.js -o -iname \*.css \) | while read fname
+    #      do
+    #      minify ${fname} | sponge ${fname}
+    #      done   
 
     - name: 📨 FTPS files
       uses: SamKirkland/FTP-Deploy-Action@4.3.1
