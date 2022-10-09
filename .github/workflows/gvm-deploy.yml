@@ -30,11 +30,11 @@ jobs:
         npm install @11ty/eleventy
         npx @11ty/eleventy --output=public_html
         
-    - name: 🗜️ Minify
-      uses: nizarmah/auto-minify@v2.1
-      with:
-        directory: ./public_html
-        overwrite: true
+   # - name: 🗜️ Minify
+   #   uses: nizarmah/auto-minify@v2.1
+   #   with:
+   #     directory: ./public_html
+   #     overwrite: true
     
     - name: ✉️ Deploy to subdomain
       if: ${{inputs.staging == true}}
