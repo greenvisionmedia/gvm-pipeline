@@ -5,7 +5,7 @@ on:
       staging:
         required: true
         type: boolean
-      subdomain:
+      sitecode:
         required: true
         type: string
       domain:
@@ -29,12 +29,6 @@ jobs:
       run: |
         npm install @11ty/eleventy
         npx @11ty/eleventy --output=public_html
-        
-   # - name: 🗜️ Minify
-   #   uses: nizarmah/auto-minify@v2.1
-   #   with:
-   #     directory: ./public_html
-   #     overwrite: true
     
     - name: ✉️ Deploy to subdomain
       if: ${{inputs.staging == true}}
@@ -44,7 +38,7 @@ jobs:
         username: gvm@greenvisionmedia.net
         password: ${{secrets.test}}
         local-dir: ./public_html/
-        server-dir: ${{inputs.subdomain}}.greenvisionmedia.net/public_html/
+        server-dir: ${{inputs.sitecode}}.greenvisionmedia.net/public_html/
         protocol: ftps
     
     - name: 📩 Deploy to custom domain
