@@ -1,4 +1,4 @@
-name: GVM Deploy
+name: GV Deploy
 on:
   workflow_call:
     inputs:
