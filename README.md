@@ -1,3 +1,3 @@
 # GV Actions
 
-Central location for reusable workflows.
+Repo for both reusable workflows (/.github) and template workflows (/.templates).
