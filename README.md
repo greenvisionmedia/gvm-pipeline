@@ -1,3 +1,3 @@
 # GV Actions
 
-Repo for both reusable workflows (/.github) and template workflows (/.templates).
+Repo for both reusable workflows (/.github) and starter workflows (/.starters).
