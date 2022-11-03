@@ -1,0 +1,53 @@
+name: GV Deploy
+on:
+  workflow_call:
+    inputs:
+      staging:
+        required: true
+        type: boolean
+      sitecode:
+        required: true
+        type: string
+      domain:
+        required: true
+        type: string
+    secrets:
+      test:
+        required: true
+      ftp:
+        required: true
+        
+jobs:
+  deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3   
+    
+    - name: 🏗️ Build with 11ty
+      run: |
+        npm install @11ty/eleventy
+        npx @11ty/eleventy --output=public_html
+    
+    - name: ✉️ Deploy to subdomain
+      if: ${{inputs.staging == true}}
+      uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      with:
+        server: greenvisionmedia.net
+        username: gvm@greenvisionmedia.net
+        password: ${{secrets.test}}
+        local-dir: ./public_html/
+        server-dir: ${{inputs.sitecode}}.greenvisionmedia.net/public_html/
+        protocol: ftps
+    
+    - name: 📩 Deploy to custom domain
+      if: ${{inputs.staging == false}}
+      uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      with:
+        server: ${{inputs.domain}}
+        username: gvm@${{inputs.domain}}
+        password: ${{secrets.ftp}}
+        local-dir: ./public_html/
+        server-dir: ${{inputs.domain}}/public_html/
+        protocol: ftps
