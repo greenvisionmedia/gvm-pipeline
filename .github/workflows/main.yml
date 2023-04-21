@@ -16,20 +16,20 @@ on:
         required: true
       ftp:
         required: true
-
+        
 jobs:
   deploy:
-    name: í ¼í¾‰ Deploy
+    name: ğŸ‰ Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: í ½íºš Get latest code
-      uses: actions/checkout@v3
-
-    - name: í ¼í¿—ï¸ Build with 11ty
+    - name: ğŸšš Get latest code
+      uses: actions/checkout@v3   
+    
+    - name: ğŸ—ï¸ Build with 11ty
       run: |
         npm install @11ty/eleventy
         npx @11ty/eleventy --output=public_html
-
+    
     - name: âœ‰ï¸ Deploy to subdomain
       if: ${{inputs.staging == true}}
       uses: SamKirkland/FTP-Deploy-Action@4.3.1
@@ -40,8 +40,8 @@ jobs:
         local-dir: ./public_html/
         server-dir: ${{inputs.sitecode}}.greenvisionmedia.net/public_html/
         protocol: ftps
-
-    - name: í ½í³© Deploy to custom domain
+    
+    - name: ğŸ“© Deploy to custom domain
       if: ${{inputs.staging == false}}
       uses: SamKirkland/FTP-Deploy-Action@4.3.1
       with:
